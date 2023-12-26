@@ -1,5 +1,7 @@
 package main;
 
+import tile.TileManger;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -16,6 +18,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     //Frames Per Second
     int FPS = 60;
+
+
 
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
