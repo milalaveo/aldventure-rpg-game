@@ -44,10 +44,20 @@ public class GamePanel extends JPanel implements Runnable {
     public void run() {
         double drawInterval = 1000000000.0 / FPS;
         double nextDrawTime = System.nanoTime() + drawInterval;
+        double delta = 0;
+        long lastTime = System.nanoTime();
         while (gameThread != null) {
 
+            long now = System.nanoTime();
+            delta += (now - lastTime) / drawInterval;
+            lastTime = now;
+
+            if (delta >= 1) {
+                delta = 0;
+            }
+
             // Update info about character position;
-            update();
+            update(delta);
 
             // Draw the screen according to updated information;
             repaint();
@@ -69,8 +79,8 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
-    public void update() {
-        player.update();
+    public void update(double delta) {
+        player.update(delta);
     }
 
     public void paintComponent(Graphics g) {
@@ -78,8 +88,8 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g2 = (Graphics2D) g;
 
-        player.repaint(g2);
         tileM.draw(g2);
+        player.repaint(g2);
         g2.dispose();
 
     }
