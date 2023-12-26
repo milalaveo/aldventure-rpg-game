@@ -6,11 +6,11 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 
-public class TileManger {
+public class TileManager {
     GamePanel gp;
     Tile[] tile;
 
-    public void TileManager(GamePanel gp) {
+    public TileManager(GamePanel gp) {
         this.gp = gp;
         tile = new Tile[10];
         getTileImage();
@@ -34,7 +34,25 @@ public class TileManger {
         }
     }
     public void draw(Graphics2D g2) {
-        g2.drawImage(tile[0].image, 0, 0, 12, 12, null );
+        int row = 0;
+        int column = 0;
+        int x = 0;
+        int y = 0;
+
+
+        while (column < gp.maxScreenColumn && row < gp.maxScreenRow){
+            g2.drawImage(tile[0].image, x, y, gp.tileSize, gp.tileSize, null );
+            column++;
+            x += gp.tileSize;
+
+            if(column == gp.maxScreenColumn){
+                column = 0;
+                x = 0;
+                row++;
+                y += gp.tileSize;;
+            }
+
+        }
 
     }
 }

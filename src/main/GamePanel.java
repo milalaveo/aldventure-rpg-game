@@ -1,6 +1,6 @@
 package main;
 
-import tile.TileManger;
+import tile.TileManager;
 
 import entity.GameSettings;
 import entity.Player;
@@ -10,16 +10,17 @@ import java.awt.*;
 
 public class GamePanel extends JPanel implements Runnable {
 
-    // Screen settings
     final GameSettings settings = new GameSettings();
-    final int tileSize = settings.getTileSize();
-    final int maxScreenColumn = 18;
-    final int maxScreenRow = 14;
+    public final int tileSize = settings.getTileSize();
+    public final int maxScreenColumn = 18;
+    public final int maxScreenRow = 14;
     final int screenWidth = tileSize * maxScreenColumn;
     final int screenHeight = tileSize * maxScreenRow;
 
     //Frames Per Second
     int FPS = 60;
+
+    TileManager tileM = new TileManager(this);
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
 
@@ -43,9 +44,6 @@ public class GamePanel extends JPanel implements Runnable {
     public void run() {
         double drawInterval = 1000000000.0 / FPS;
         double nextDrawTime = System.nanoTime() + drawInterval;
-
-        long timer = 0;
-
         while (gameThread != null) {
 
             // Update info about character position;
@@ -81,7 +79,7 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D) g;
 
         player.repaint(g2);
-
+        tileM.draw(g2);
         g2.dispose();
 
     }
